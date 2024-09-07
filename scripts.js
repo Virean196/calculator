@@ -103,11 +103,9 @@ function toPercent(val){
     return val/100;
 }
 
+// Checks if the operands exist already in the display text to prevent duplicates
 function checkForRepeatedOperands(string){
-    if(string != "+" &&
-        string!= "-" &&
-        string!= "*" &&
-        string!= "/"){
+    if(string != "+" && string!= "-" && string!= "*" && string!= "/"){
         return true;
     }
     return false;
@@ -131,9 +129,9 @@ document.querySelector(".container").addEventListener('click', function(event){
         else if(buttonValue == "."){
             updateDisplay(".")
         }
-        // When a button that's not a number is pressed, it goes into a switch case
-        // That pushes the display text content and the button text content into the array 
-        // Also resets the display text content to ""
+
+        // Comment to be added
+
         switch (buttonValue) {
             case "+":
                 if(checkForRepeatedOperands(display.textContent.charAt((display.textContent).length-1))){
