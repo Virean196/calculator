@@ -103,11 +103,22 @@ function toPercent(val){
     return val/100;
 }
 
+function checkForRepeatedOperands(string){
+    if(string != "+" &&
+        string!= "-" &&
+        string!= "*" &&
+        string!= "/"){
+        return true;
+    }
+    return false;
+}
+
 // Adds an event listener to the parent "container" and if the child node has a tag name of "BUTTON"
 // It then proceeds to execute code based on the button pressed
 document.querySelector(".container").addEventListener('click', function(event){
     if(event.target.tagName==="BUTTON"){
         const buttonValue = event.target.textContent; // Saves the content of the button pressed
+        let tempValue;
         if(buttonValue >= 0 && buttonValue <= 9){
             updateDisplay(buttonValue);
         }
@@ -125,31 +136,32 @@ document.querySelector(".container").addEventListener('click', function(event){
         // Also resets the display text content to ""
         switch (buttonValue) {
             case "+":
-                calcArray.push(display.textContent);
-                calcArray.push("+");
-                display.textContent = "";
+                if(checkForRepeatedOperands(display.textContent.charAt((display.textContent).length-1))){
+                    display.textContent += "+";
+                }
                 break;
             case "-":
-                calcArray.push(display.textContent);
-                calcArray.push("-");
-                display.textContent = "";
+                if(checkForRepeatedOperands(display.textContent.charAt((display.textContent).length-1))){
+                    display.textContent += "-";
+                }
                 break;
             case "*":
-                calcArray.push(display.textContent);
-                calcArray.push("*");
-                display.textContent = "";
+                if(checkForRepeatedOperands(display.textContent.charAt((display.textContent).length-1))){
+                    display.textContent += "*";
+                }
                 break;
             case "/":
-                calcArray.push(display.textContent);
-                calcArray.push("/");
-                display.textContent = "";
+                if(checkForRepeatedOperands(display.textContent.charAt((display.textContent).length-1))){
+                    display.textContent += "/";
+                }
                 break;
             case "%":
                 display.textContent = toPercent(parseInt(display.textContent));
                 break;        
             case "=":
-                calcArray.push(display.textContent);
+                calcArray = display.textContent.split(/([\+\-\*\/])/);
                 calculate(calcArray);
+                console.log(calcArray);
             default:
                 break;
         }
